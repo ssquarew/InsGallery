@@ -56,6 +56,19 @@ public final class InsGallery {
         openGallery(activity, engine, cacheResourcesEngine, null, listener);
     }
 
+    public static void openGalleryOnlyImage(Activity activity, ImageEngine engine, CacheResourcesEngine cacheResourcesEngine, OnResultCallbackListener listener) {
+        openGalleryOnlyImage(activity, engine, cacheResourcesEngine, null, listener);
+    }
+
+    public static void openGalleryOnlyImage(Activity activity, ImageEngine engine, CacheResourcesEngine cacheResourcesEngine, List<LocalMedia> selectionMedia, OnResultCallbackListener listener) {
+        applyInstagramOptions(activity.getApplicationContext(), PictureSelector.create(activity)
+                .openGallery(PictureMimeType.ofImage()))// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                .imageEngine(engine)// 外部传入图片加载引擎，必传项
+                .loadCacheResourcesCallback(cacheResourcesEngine)// 获取图片资源缓存，主要是解决华为10部分机型在拷贝文件过多时会出现卡的问题，这里可以判断只在会出现一直转圈问题机型上使用
+                .selectionData(selectionMedia)// 是否传入已选图片
+                .forResult(listener);
+    }
+
     public static void openGallery(Activity activity, ImageEngine engine, CacheResourcesEngine cacheResourcesEngine, List<LocalMedia> selectionMedia, OnResultCallbackListener listener) {
         applyInstagramOptions(activity.getApplicationContext(), PictureSelector.create(activity)
                 .openGallery(PictureMimeType.ofAll()))// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
@@ -72,6 +85,15 @@ public final class InsGallery {
                 .loadCacheResourcesCallback(cacheResourcesEngine)// 获取图片资源缓存，主要是解决华为10部分机型在拷贝文件过多时会出现卡的问题，这里可以判断只在会出现一直转圈问题机型上使用
                 .selectionData(selectionMedia)// 是否传入已选图片
                 .forResult(listener);
+    }
+
+    public static void openGalleryOnlyImage(Activity activity, ImageEngine engine, CacheResourcesEngine cacheResourcesEngine, List<LocalMedia> selectionMedia) {
+        applyInstagramOptions(activity.getApplicationContext(), PictureSelector.create(activity)
+                .openGallery(PictureMimeType.ofImage()))// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                .imageEngine(engine)// 外部传入图片加载引擎，必传项
+                .loadCacheResourcesCallback(cacheResourcesEngine)// 获取图片资源缓存，主要是解决华为10部分机型在拷贝文件过多时会出现卡的问题，这里可以判断只在会出现一直转圈问题机型上使用
+                .selectionData(selectionMedia)// 是否传入已选图片
+                .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
 
     public static void openGallery(Activity activity, ImageEngine engine, CacheResourcesEngine cacheResourcesEngine, List<LocalMedia> selectionMedia) {
